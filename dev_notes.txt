@@ -1,0 +1,28 @@
+1) to export online mbed programs for mbed-cli, export program as GCC ARM and unzip the folder somewhere.  Go to the folder, issue the following commands:
+	mbed new . (ignore the warnings)
+ 	cd mbed
+	mbed update .
+	cd ..
+	edit .mbed file to add a line "TARGET=NRF52-DK" (no quotes, or MAX32600MBED)
+	mbed compile
+
+2) NRF52-DK Firmware:
+	There are two versions: J-link version (J-Link OB-SAM3U128-V2-NordicSemi 170213) and MBED version (nrf51822aa_atsam3u2c_if_mbed_V0219_02022016).  You need to boot into BOOTLOADER (press RESET button while powering on) in order to burn them.  J-link version seems much more stable than MBED.  You can also use "nRFGo Studio" desktop application to manage this.
+
+3) NRF52-DK Application using MBED
+	git clone https://github.com/ARMmbed/mbed-os-example-ble
+	cd mbed-os-example-bed
+	cd BLE_HeartRate
+	mbed update
+	edit .mbed file to add a line "TARGET=NRF52-DK" without the quotes
+	mbed compile
+	override Source with own (for example, export Source2 folder as Library on SW1_Bryce project.  Make sure to delete main.cpp in Source as that conflicts with main2.cpp)
+
+
+4) DFU:
+
+	C:\SW1\DFU>nrfutil settings generate --family NRF52 --application mbed-os_NRF52_DK_OTA.hex --application-version 1 --bootloader-version 1 --bl-settings-version 1 settings_v1.hex
+
+5) SW1_Joe corresponds to MBED SW1_Joe
+
+6) DFU source (C:\SW1\mbed-os\source) is maintained on github as SW1_DFU.
